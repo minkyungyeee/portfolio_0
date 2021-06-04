@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* 반응형다시 다살펴보기 */
 @media all and (max-width:1600px){
     #wrap #main #section7 .wrap .gap .container .content > ul > li .content-gap .content-wrap .title-wrap .title-gap {padding:10%;}
 
