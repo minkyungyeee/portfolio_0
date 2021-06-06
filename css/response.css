@@ -15,6 +15,17 @@
 }
 
 @media all and (max-width:1200px){
+    /* section2*/
+    #wrap #main #section2 {overflow:visible;padding:60px 0;}
+    #wrap #main #section2 .wrap .gap {margin:0 50px;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(1) {width:50%;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(2) {width:50%;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:last-child {width:100%;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:last-child .content-gap {padding-top:60px;}
+
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box {position:relative;}
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box > span  {height:100px;}
+
     #wrap #main #section3 {padding:15vw 0 10.83333333vw 0;}
     #wrap #main #section3 .wrap .gap .container .deco-title {display:none;}
     #wrap #main #section3 .wrap .gap .container .content .slide-box > ul li.left-box {width:24.41666667vw;}
@@ -122,18 +133,6 @@
     #wrap #main #section1 .wrap .gap .container .slide-container .arrow-next ,
     #wrap #main #section1 .wrap .gap .container .slide-container .arrow-prev ,
     #wrap #main #section1 .wrap .gap .container .slide-container .page-btn-wrap {display:none;}
-
-
-    /* section2*/
-    #wrap #main #section2 {overflow:visible;padding:60px 0;}
-    #wrap #main #section2 .wrap .gap {margin:0 50px;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(1) {width:50%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(2) {width:50%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:last-child {width:100%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:last-child .content-gap {padding-top:60px;}
-
-    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box {position:relative;}
-    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box > span  {height:100px;}
 
     /* section3*/
     #wrap #main #section3 .wrap .gap .container .content .slide-box {padding-top:0;}
