@@ -794,6 +794,7 @@
             var $window = $(window);
 
             var $sec3 = $('#section3');
+            var sec3T = $('#section3').offset().top-300;
             var $slideWrap = $('#section3 .slide-wrap');
             var $slideView = $('#section3 .slide-view');
             var $nextBtn = $('#section3 .next-btn');
@@ -815,7 +816,7 @@
                     scr = 0;
                     $sec3.removeClass('addAni');
                 }
-                if($(this).scrollTop() > 900){
+                if($(this).scrollTop() > sec3T){
                     if(scr==0){
                         scr = 1;
                         scrollFn();
@@ -955,7 +956,7 @@
             var y = 0;
 
             var scr = 0;
-            var sec4T = $('#section4').offset().top;
+            var sec4T = $('#section4').offset().top-400;
 
             function scrollFn(){
                 $left.addClass('addAni');
@@ -970,7 +971,7 @@
                     $left.removeClass('addAni');
                     $right.removeClass('addAni');
                 }
-                if($(this).scrollTop() > sec4T-400){
+                if($(this).scrollTop() > sec4T){
                     if(scr==0){
                         scr=1;
                         scrollFn();
@@ -1416,6 +1417,7 @@
         section9Fn: function(){
             var $li = $('#section9 .content > ul > li');
             var $ul = $('#section9 .content-wrap > ul');
+            var $left = $('#section9 .content-wrap .left');
             var $leftW = $('#section9 .content-wrap .left').innerWidth();
             var $h3 = $('#section9 .right-wrap > h3');
             var $p = $('#section9 .right-wrap > p');
@@ -1455,22 +1457,40 @@
 
             function resizeFn(){
                 $leftW  = $('#section9 .content-wrap .left').innerWidth();
-                $ulH    = $leftW * 1.334126129;
-                h3Size  = $leftW * 0.066892118;
-                pSize   = $leftW * 0.055743432;
-                h6Size  = $leftW * 0.044594745;
+                if($(window).innerWidth()>1200){
+                    $ulH    = $leftW * 1.334126129;
+                    h3Size  = $leftW * 0.066892118;
+                    pSize   = $leftW * 0.055743432;
+                    h6Size  = $leftW * 0.044594745;
+                }
+                else if($(window).innerWidth()>980){
+                    $ulH    = 280;
+                    h3Size = 16;
+                    pSize = 14;
+                    h6Size = 13;
+                }
+                else{
+                    $ulH    = 200;
+                    h3Size = 16;
+                    pSize = 14;
+                    h6Size = 13;
+                }
+
 
                 $ul.css({height:$ulH});
+                $left.css({height:$ulH});
                 $h3.css({fontSize:h3Size});
                 $p.css({fontSize:pSize});
                 $h6.css({fontSize:h6Size});
             }
 
+            setTimeout(resizeFn,10);
+
             $(window).resize(function(){
                 setTimeout(resizeFn,10);
             });
             
-            setTimeout(resizeFn,10);
+            
         },
         section10Fn: function(){
             var $sec10 = $('#section10');
@@ -1484,7 +1504,7 @@
                     scr = 0;
                     $sec10.removeClass('addAni');
                 }
-                if($(this).scrollTop() > $sec10.offset().top-400){
+                if($(this).scrollTop() > $sec10.offset().top-500){
                     if(scr==0){
                         scr = 1;
                         scrollFn();
@@ -1495,6 +1515,7 @@
         footerFn:   function(){
             //폼을 이용한 메일주소를 PHP(서버사이드 스크립트언어) 비동기 전송(사용자가 사용을안하는틈틈히 정보를 전송) AJAX
             var $submitBtn = $('#submitBtn');
+            var $res  = $('#footer .response');
             var $response  = $('#footer .response > h3');
             var $msgWrap = $('#footer .msg-wrap')
             var $inputWrap = $('#footer .input-wrap');
@@ -1521,7 +1542,7 @@
                                 code:$frmCode
                             },
                             success:function(result){
-                                
+                                $res.css({display:'block'});
                                 $inputWrap.addClass('addAjax');
                                 $response.html(result);
 
@@ -1533,7 +1554,7 @@
                                     //$response.children().remove();
                                     $inputWrap.removeClass('addAjax');
                                     $msgWrap.fadeOut(1000);
-                                    
+                                    $res.css({display:'none'});
                                 }
                             },
                             error:function(msg){
@@ -1562,7 +1583,7 @@
 
             function modalShowFn(){
                 if($(window).innerWidth()>1200){
-                    $modalDemo.stop().fadeIn(1000); //t변수쓰기싫으면 addClass이용해두됨
+                    $modalDemo.stop().fadeIn(1000);
                 }
                 else{
                     $modalDemo.stop().fadeOut(0);
@@ -1574,14 +1595,12 @@
             $(window).resize(function(){
                 setTimeout(modalShowFn,100);
             })
-            //최상단에서 100픽셀 이상 아래로 스크롤하면
-            //goTop메뉴가 보이고
-            //맨위로 올라가면 안보인다.
+            
             $(window).scroll(function(){
                 if($(this).scrollTop()>=100){
                     if(t==0){   //t변수 안쓰면 100px넘어가면 계속 발생함
                         t=1;
-                        $goTopBtnWrap.stop().fadeIn(1000); //t변수쓰기싫으면 addClass이용해두됨
+                        $goTopBtnWrap.stop().fadeIn(1000);
                     }
                     
                 }
@@ -1594,21 +1613,15 @@
             })
         },
         demoModalFn: function(){
-            //버튼을 클릭하면
-            //html toggleClass .addModal (전체페이지에 스크롤삭제)
-            //header toggleClass .addHide (메뉴안보이게 하려고)
-            //modalDeomo toggleClass .addModal (데모창이 우측에서 좌측으로 들어오고, 버튼이 바뀜)
             var $html       = $('html');
             var $header     = $('#header');
             var $modal      = $('#modalDemo');
             var $modalBtn   = $('#modalDemo .modal-btn');
             var $document = $(document);
 
-            //target : 마우스 및 키보드 등 버튼 이벤트의 대상
             $modalBtn.on({
                 click:function(e){
-                    e.stopPropagation(); // 여기서 클릭이벤트일어난게 다른거에 전파되는걸 막기위해서
-                    //console.log(e.currentTarget.nodeName); currentTarget의 태그이름를 nodeName이라함
+                    e.stopPropagation(); 
                     $html.toggleClass('addModal');
                     $header.toggleClass('addHide');
                     $modal.toggleClass('addModal');
@@ -1622,8 +1635,6 @@
                 }
             });
 
-            //웹문서의 전체를 클릭대상
-            //위에 클릭 이벤트 대상이 아닌 이벤트를 찾기위해서
             $document.on({
                 click:function(e){
                     if(e.target !== e.currentTarget){ 
@@ -1631,11 +1642,6 @@
                         $header.removeClass('addHide');
                         $modal.removeClass('addModal');
                     }
-
-                    // $html.removeClass('addModal');
-                    // $header.removeClass('addHide');
-                    // $modal.removeClass('addModal');
-                    // 어차피 e.target은 내가 클릭한거고, e.currentTarget은 $document이니까 무조건 다르게 뜸 그래서 if문굳이 없어도되는듯
                 }
             });
         }
