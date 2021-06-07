@@ -11,6 +11,10 @@
 }
 
 @media all and (max-width:1400px){
+    /* 섹션1 슬라이드_오른쪽하단 흰박스 */
+    #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box {width:500px;height:313px;background:#fff;}/* 600 370 */
+    #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box .text-gap {padding:72px 60px;text-transform:uppercase;}
+
     #wrap #main #section7 .wrap .gap .container .content > ul > li .content-gap .content-wrap .title-wrap .title-gap {padding:6% 10%;}
 }
 
@@ -127,13 +131,21 @@
     /* section2*/
     #wrap #main #section2 {overflow:visible;padding:60px 0;}
     #wrap #main #section2 .wrap .gap {margin:0 50px;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(1) {width:50%;}
+    #wrap #main #section2 .wrap .gap .container > ul {position:relative;}
+    #wrap #main #section2 .wrap .gap .container > ul > li {float:none;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(1) {width:50%; margin-bottom:40px;}
     #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(2) {width:50%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:last-child {width:100%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:last-child .content-gap {padding-top:60px;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:last-child {position:absolute;top:0;right:0;width:50%;}
+    /* #wrap #main #section2 .wrap .gap .container > ul > li:last-child .content-gap {padding-top:60px;} */
+
+    /* 메인 섹션2 -1번째 칸*/
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content > h2 {padding-bottom:50px;}
+    /* 메인 섹션2 -2번째 칸*/
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content > h3 {padding-bottom:20px;}
 
     #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box {position:relative;}
-    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box > span  {height:100px;}
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box img {width:100%;}
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box > span  {height:100px;bottom:25px;}
 
     /* section3*/
     #wrap #main #section3 .wrap .gap .container .content .slide-box {padding-top:0;}
@@ -172,7 +184,7 @@
 
     /* 메인 섹션6 */
     /* #wrap #main #section6 {padding:0 0 13.26530612vw 0;} */
-    #wrap #main #section6 {padding:13.26530612vw 0;}
+    #wrap #main #section6 {padding:0 0 13.26530612vw 0;}
 
     /* 메인 섹션8 */
     #wrap #main #section8 {padding:13.26530612vw 0;}
@@ -210,14 +222,9 @@
 @media all and (max-width:760px){
     /* section2*/
     #wrap #main #section2 .wrap .gap {margin:0 30px;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(1),
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(2),
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(3) {width:100%;}
-    #wrap #main #section2 .wrap .gap .container > ul > li:nth-child(2) .content-gap,
-    #wrap #main #section2 .wrap .gap .container > ul > li:last-child .content-gap {padding-top:40px;}
     #wrap #main #section2 .wrap .gap .container > ul > li .content-gap {margin:0;}
 
-    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content > h2 {width:100%;font-size:22px;padding-bottom:40px;}
+    #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content > h2 {font-size:22px;}
     #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content > p {line-height:170%;}
     #wrap #main #section2 .wrap .gap .container > ul > li .content-gap .content .img-box {position:relative;}
 
@@ -232,6 +239,11 @@
 
 
 @media all and (max-width:600px){
+    /* section2 */
+    #wrap #main #section2 .wrap .gap .container > ul > li {float:left;width:50%;}
+    #wrap #main #section2 .wrap .gap .container > ul > li:last-child {display:none;}
+
+    /* section3 */
     #wrap #main #section3 .wrap .gap .container .content > h5 {font-size:2.5vw;padding-bottom:5vw;}
     #wrap #main #section3 .wrap .gap .container .content > h2 {font-size:5.366666667vw;}
     #wrap #main #section3 .wrap .gap .container .content .slide-box > ul li.left-box .box-gap .content-box {height:45vw;}

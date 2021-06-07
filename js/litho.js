@@ -1,8 +1,7 @@
 ;(function($){
     
     var litho = {
-        btn:0,  //헤더 영역에서 모바일 버튼 클릭시 변경
-        //ba:true, 이렇게 전역변수를 선언도 가능하다 모둔 메서드안에서 사용! ,로 구분해서 저아래 여러개쓰기 가능
+        btn:0,
         init:   function(){
             this.scrollEventFn();
             this.headerFn();
@@ -20,7 +19,7 @@
             this.smoothScrollFn();
             this.demoModalFn();
         },
-        scrollEventFn:  function(){ //자세한 설명 및 주석 (03_10_project_themezza_litho_네비반응형,스크롤이벤트)
+        scrollEventFn:  function(){
             var scrollPrev = 0;
             var scrollCurrent = 0;
             var $window = $(window);
@@ -28,7 +27,7 @@
             var that = this;
 
             function wheelPositionFn(){
-                result = scrollPrev - scrollCurrent > 0 ? 'up' : 'down' //이 결과값 문자의 경우 대소문자 구분함
+                result = scrollPrev - scrollCurrent > 0 ? 'up' : 'down'
                 return {
                     result,
                     scrollPrev,
@@ -36,7 +35,7 @@
                 }
             }
 
-            $window.scroll(function(){  //추가 설명 및 주석 (03_11_project_themezza_litho_스크롤이벤트)
+            $window.scroll(function(){
                 scrollCurrent = $(this).scrollTop();
                 wheelPositionFn();
 
@@ -385,6 +384,7 @@
             var $nav = $('#header #nav');
             var pc = 0;
             var mobile = 0;
+            var click = true;
 
             var $logo = $('#header #logo > a > img');
 
@@ -392,9 +392,9 @@
             //자세한 설명 및 주석 (03_10_project_themezza_litho_네비반응형,스크롤이벤트)
             function pcEventFn(){
                 // $nav.stop().show();
-                // $sub.stop().hide();
-                // $subSub.stop().hide();
-                // $subSubSub.stop().hide();
+                $sub.css({display:'none',height:'auto'})
+                $subSub.css({display:'none'});
+                $subSubSub.css({display:'none'});
                 $nav.css({display:'inline-block'});
                 $logo.attr('src','./img/logo-white.png');
                 
@@ -441,7 +441,7 @@
                 $subSub.stop().hide();
                 $subSubSub.stop().hide();
                 $bar.removeClass('addMobile');
-                $nav.stop().slideUp(0);
+                $nav.css({display:'none'});
 
                 $logo.attr('src','./img/logo-yellow-ochre-alt.png');
 
@@ -451,6 +451,55 @@
                 $subBtn.off('mouseenter');
                 $subSubBtn.off('mouseenter');
                 $subSub.off('mouseleave');
+
+                $mainBtn.on({
+                    click: function(event){
+                        event.preventDefault();
+                        if(click===true){
+                            click = false;
+                            $sub.css({height:'auto'});
+                            $sub.stop().slideUp();
+                            $subSub.stop().slideUp();
+                            $subSubSub.stop().slideUp();
+                            $(this).next().stop().slideToggle(300);
+
+                            setTimeout(function(){
+                                click=true;
+                            },500)
+                        }
+                    }
+                });
+                $subBtn.on({
+                    click: function(event){
+                        event.preventDefault();
+                        if(click===true){
+                            click = false;
+                            $sub.css({height:'auto'});
+                            $subSub.stop().slideUp();
+                            $subSubSub.stop().slideUp();
+                            $(this).next().stop().slideToggle(300);
+                        }
+
+                        setTimeout(function(){
+                            click = true;
+                        },500)
+                    }
+                });
+                $subSubBtn.on({
+                    click: function(event){
+                        event.preventDefault();
+                        if(click===true){
+                            click=false;
+                            $sub.css({height:'auto'});
+                            $subSubSub.stop().slideUp();
+                            $(this).next().stop().slideToggle(300);
+                        }
+
+                        setTimeout(function(){
+                            click = true;
+                        },500)
+                    }
+                });
             }
 
             function pcMobileFn(){
@@ -458,7 +507,7 @@
                     pc =1;
                     mobile=0;
                     pcEventFn();
-                    that.btn = 0 ; //여기서 초기화해두되고 아님 pcEventFn()에서 초기화해도 가능
+                    that.btn = 0 ;
                 }
                 else{
                     pc = 0;
@@ -473,35 +522,6 @@
 
             mobileEventFn();
 
-            //버튼 클릭이벤트설정 //버그발생때문에 mobileEventFn에서 빼버렸음, 햄버거메뉴도
-            $mainBtn.on({
-                click: function(event){
-                    event.preventDefault();
-                    console.log('mobile', mobile);
-                    if(mobile==1){
-                        $sub.stop().slideUp(300);
-                        $(this).next().stop().slideToggle(300);
-                    }
-                }
-            });
-            $subBtn.on({
-                click: function(event){
-                    event.preventDefault();
-                    if(mobile==1){
-                        $subSub.stop().slideUp(300);
-                        $(this).next().stop().slideToggle(300);
-                    }
-                }
-            });
-            $subSubBtn.on({
-                click: function(event){
-                    event.preventDefault();
-                    if(mobile==1){
-                        $subSubSub.stop().slideUp(300);
-                        $(this).next().stop().slideToggle(300);
-                    }
-                }
-            });
             //햄버거메뉴구동
             $mobileBtn.on({
                 click:function(event){
@@ -521,18 +541,17 @@
             var $winH = $(window).height();     
             var $section1 = $('#section1');
 
-            var $slideWrap = $('#section1 .slide-wrap'); //슬라이드 넘어가는 이벤트발생 선택자
-            var $slideView = $('#section1 .slide-view'); //터치대상이 되는 선택자
+            var $slideWrap = $('#section1 .slide-wrap'); 
+            var $slideView = $('#section1 .slide-view');
             var $nextBtn = $('#section1 .next-btn');
             var $prevBtn = $('#section1 .prev-btn');
             var $pageBtn = $('#section1 .page-btn');
             var cnt = 0;
             var n = $('#section1 .slide').length; 
+            var k = null;
             var setId = null;
             var setId2 = null;
 
-                //창 높이 창 너비 (자세한주석, 필기_02_24_project_themezza_litho_창넓이높이jq_하위서브메뉴구축
-                //                                03_08_project_themezza_litho_반응형,03_09,03_10여기에 최종정리)
                 function resizeFn(){
                     $winW = $(window).width();
                     $winH = $(window).height();
@@ -553,48 +572,41 @@
                     $section1.css({width:$winW , height:$winH});
 
                 } 
-                resizeFn();
+
                 setTimeout(resizeFn,100);
 
                 $window.resize(function(){
                     setTimeout(resizeFn,100);
                 });
 
-                window.addEventListener('',function(){
-                    setTimeout(resizeFn,100);
-                });
-
-                //메인슬라이드 (자세한주석, 필기_03_03_project_themezza_litho_메인슬라이드_제이쿼리_페이지이동버튼)
-                //1.메인슬라이드함수
-                // function mainSlideFn(){
-                //     $slideWrap.stop().animate({left:-$winW*cnt}, 600,'easeInOutExpo' ,function(){
-                //         if(cnt>=n){cnt=0} 
-                //         if(cnt<0){cnt=n-1}
-                //         $slideWrap.stop().animate({left:-$winW*cnt},0);
-                //     });
-                //     pageBtnColorEventFn();
-                // }
-
                 //1-1.메인 fadeIn fadeOut 함수
                 //(1)다음 슬라이드 함수
                 function mainNextSlideFn(){
-                    $slide.css({ zIndex:1 });   //초기화
-                    $slide.eq(cnt==0?n-1:cnt-1).css({ zIndex:2 });     //이전슬라이드
+                    if(k===null){
+                        k= cnt===0?n-1:cnt-1;
+                    }
+                    $slide.css({ zIndex:1 , opacity:1});   //초기화
+                    $slide.eq(k).css({ zIndex:2 });     //이전슬라이드
                     $slide.eq(cnt).css({ zIndex:3 }).stop().animate({opacity:0},0).animate({opacity:1},1500);   //현재슬라이드
                     pageBtnColorEventFn();
+                    k=null;
                 }
                 //(2)이전 슬라이드 함수
                 function mainPrevSlideFn(){
+                    if(k===null){
+                        k = cnt===n-1?0:cnt+1;
+                    }
                     $slide.css({ zIndex:1, opacity:1 }); 
                     $slide.eq(cnt).css({ zIndex:2 }); 
-                    $slide.eq(cnt==2?0:cnt+1).css({ zIndex:3 }).stop().animate({opacity:1},0).animate({opacity:0},1500);
+                    $slide.eq(k).css({ zIndex:3 }).stop().animate({opacity:1},0).animate({opacity:0},1500);
                     pageBtnColorEventFn();
+                    k = null;
                 }
 
                 //2.다음 슬라이드 카운트 함수
                 function nextSlideCountFn(){
                     cnt ++;
-                    if(cnt>2){cnt=0}
+                    if(cnt>n-1){cnt=0}
                     mainNextSlideFn(); 
                 }
                 //2-2.이전 슬라이드 카운트 함수
@@ -630,7 +642,6 @@
                     if (z>2){z=0}
                     $pageBtn.removeClass('addPage');
                     $pageBtn.eq(z).addClass('addPage');
-                    //$pageBtn.eq(cnt>n-1?0:cnt).addClass('addPage'); z안쓰고 이렇게도가능
                 }
                 pageBtnColorEventFn(); 
 
@@ -639,6 +650,7 @@
                     $(this).on({ 
                         click:  function(){
                             pauseTimerFn();
+                            k = cnt;
                             if(cnt > idx){
                                 cnt = idx;
                                 mainNextSlideFn();
@@ -651,26 +663,8 @@
                     });
                });
 
-                //터치 스와이프 (자세한 주석, 필기 03_04)
-                //슬라이드를 오른쪽에서 왼쪽으로 터치하면 다음 슬라이드 카운트함수 호출
-                //슬라이드를 왼쪽에서 오른쪽으로 터치하면  이전 슬라이드 카운트함수 호출
-                // $slideView.swipe({
-                //     swipeLeft:function(){
-                //         pauseTimerFn();
-                //         if(!$slide.is(':animated')){
-                //             nextSlideCountFn();
-                //         }
-                //     },
-                //     swipeRight:function(){ 
-                //         pauseTimerFn();
-                //         if(!$slide.is(':animated')){
-                //             prevSlideCountFn();
-                //         }
-                //     }         
-                // });
 
-                //터치스와이프 직접구현하기 (자세한 주석, 필기 04_08)
-                //mousedown 이 마우스를 꾹 눌르는거, mouseup 이 마우스에 손떼는거
+                //터치스와이프
                 var touchStart = 0;
                 var touchEnd = 0;
                 var mouseDown = false;
@@ -680,26 +674,26 @@
                     mousedown:function(e){
                         mouseDown = 1;
                         e.preventDefault();
-                        touchStart = e.pageX;   //clientX도 사용가능
+                        touchStart = e.pageX;
                         touchYstart = e.pageY;
                     },
                     touchstart:function(e){
                         mouseDown = 1;
                         e.preventDefault();
-                        touchStart = e.originalEvent.changedTouches[0].pageX;   //clientX도 사용가능
-                        touchYstart = e.originalEvent.changedTouches[0].pageY;  //화면의 위쪽이 y값 더 작음
+                        touchStart = e.originalEvent.changedTouches[0].pageX;
+                        touchYstart = e.originalEvent.changedTouches[0].pageY;
                     },
                     mouseup:function(e){
                         e.preventDefault();
                         mouseDown = 0;
                         touchEnd = e.pageX;
                         touchYend = e.pageY;
-                        touchSwipeFn();         //마우스가 올라올때 함수를 한번만 실행시켜야함 위아래 다넣으면 두번씩 실행됨
+                        touchSwipeFn();
 
-                        if(touchYstart - touchYend < -50){ //좌우로 움직여도 손가락이 위아래도 조금은 움직일테니까 여분을 줘야함
+                        if(touchYstart - touchYend < -50){
                             $('html,body').stop().animate({scrollTop:0},1000);
                         }
-                        if(touchYstart - touchYend > 50){ //좌우로 움직여도 손가락이 위아래도 조금은 움직일테니까 여분을 줘야함
+                        if(touchYstart - touchYend > 50){
                             $('html,body').stop().animate({scrollTop:$('#section2').offset().top},1000);
                         }
                     },
@@ -711,11 +705,11 @@
                         console.log(touchYstart,touchYend)
                         touchSwipeFn();
                         //위에서 아래로 터치
-                        if(touchYstart - touchYend < -50){ //좌우로 움직여도 손가락이 위아래도 조금은 움직일테니까 여분을 줘야함
+                        if(touchYstart - touchYend < -50){
                             $('html,body').stop().animate({scrollTop:0},1000);
                         }
                         //아래에서 위로 터치
-                        if(touchYstart - touchYend > 50){ //좌우로 움직여도 손가락이 위아래도 조금은 움직일테니까 여분을 줘야함
+                        if(touchYstart - touchYend > 50){
                             $('html,body').stop().animate({scrollTop:$('#section2').offset().top},1000);
                         }
                     },
@@ -730,16 +724,13 @@
                 });
 
                 function touchSwipeFn(){
-                    //console.log('touchStart',touchStart);
-                    //console.log('touchEnd',touchEnd);
-
-                    if(touchStart-touchEnd>0){      //양수면 tocuhStart가 더 값이 크단거니까 오른쪽에서 왼쪽으로 터치스와이프한경우 =>다음슬라이드
+                    if(touchStart-touchEnd>0){
                             pauseTimerFn();
                             if(!$slide.is(':animated')){
                                 nextSlideCountFn();
                             }
                     }
-                    if(touchStart-touchEnd<0){      //음수면 touchEnd가 더 값이 크단거니까 왼쪽에서 오른쪽으로 터치스와이프한경우 =>이전슬라이드
+                    if(touchStart-touchEnd<0){
                             pauseTimerFn();
                             if(!$slide.is(':animated')){
                                 prevSlideCountFn();
@@ -747,7 +738,7 @@
                     }
                 }
 
-                //슬라이드 자동 재생 (자세한 주석, 필기 03_05,03_09)
+                //슬라이드 자동 재생
                 function autoTimerFn(){
                     setId = setInterval(nextSlideCountFn,4000);
                 }
@@ -797,9 +788,9 @@
                 }
             });
         },
-        section3Fn: function(){ //자세한 주석, 필기 03_05_project_themezza_litho_section3 참고
+        section3Fn: function(){
                                                 
-            var $sec3SlideW = $('#section3 .slide').innerWidth();       //반응형 슬ㄹㅏ이드 넓이
+            var $sec3SlideW = $('#section3 .slide').innerWidth();
             var $window = $(window);
 
             var $sec3 = $('#section3');
@@ -834,14 +825,13 @@
             });
 
 
-            //반응형 슬라이드  자세한 주석, 필기 03_08_project_themezza_litho_반응형 참고
             //1. 반응형 함수
             function responseFn(){
                 $sec3SlideW = $('#section3 .slide').innerWidth();
                 $slideWrap.stop().animate({left:-$sec3SlideW*cnt},0) ;
             }
 
-            setTimeout(responseFn,10); //로딩시 반응형 함수
+            setTimeout(responseFn,10);
 
             //2. 윈도우(window) 리사이즈(resize()) 메서드
             $window.resize(function(){
@@ -878,21 +868,8 @@
                         prevSlideCountFn();
                     }
                 }
-            });            
-            // $slideView.swipe({
-            //     swipeLeft:function(){
-            //         pauseFn();
-            //         if(!$slideWrap.is(':animated')){
-            //             nextSlideCountFn();
-            //         }
-            //     },
-            //     swipeRight:function(){
-            //         pauseFn();
-            //         if(!$slideWrap.is(':animated')){
-            //             prevSlideCountFn();
-            //         }
-            //     }
-            // });
+            });           
+
             var touchS = 0;
             var touchE = 0;
             var mouseDown = false;
@@ -966,7 +943,7 @@
             }
 
         },
-        section4Fn: function(){ //자세한 주석, 필기 03_19_project_themezza_litho_참고
+        section4Fn: function(){
             var $left     = $('#section4 .left-wrap');
             var $right    = $('#section4 .right-wrap');
             var $smallImg = $('#section4 .small-img ');
@@ -974,15 +951,11 @@
             var $section4 = $('#section4');
             var bottom = 60; /* css에서 준 기본값 */
             var left = 0;   /* css에서 준 기본값 */
-            var x = 0;      /* 기본값 준 거 없으면 0 주면됨 */
+            var x = 0;
             var y = 0;
 
             var scr = 0;
             var sec4T = $('#section4').offset().top;
-            var sec5T = $('#section5').offset().top;
-            var imgTop = -20;
-            var oldScrollTop = 0 ;
-            var newScrollTop = 0 ;
 
             function scrollFn(){
                 $left.addClass('addAni');
@@ -992,7 +965,6 @@
             }
             
             $(window).scroll(function(){
-                //console.log($(this).scrollTop(),sec4T)
                 if($(this).scrollTop()<=20){
                     scr=0;
                     $left.removeClass('addAni');
@@ -1004,72 +976,28 @@
                         scrollFn();
                     }
                 }
-
-/*              if($(this).scrollTop() >= sec4T-400 && $(this).scrollTop() < sec5T+400){
-                    newScrollTop = $(window).scrollTop();
-                    if( (oldScrollTop-newScrollTop) > 0 ){  //위로올릴때
-                        imgTop +=2;
-                        $largeImg.css({top:imgTop, transtion:'none'});
-                    }
-                    if( (oldScrollTop-newScrollTop) < 0 ){  //아래로 내릴때
-                        imgTop -=2;
-                        $largeImg.css({top:imgTop, transtion:'none'});
-                    }
-                    oldScrollTop = newScrollTop;
-                } */
             });
-            //마우스 무브 이벤트실행
-            //작은 이미지($smallImg)를 마우스의 움직임에 따라 
-            //상하(수직좌표) : Y좌표
-            //좌우(수평좌표) : X좌표
-            //좌표이동을 이용한 애니메이션 효과 (animate, css모두 이용가능)
 
-            //1.선택자($smallImg) 마우스 무브 이벤트
-
+            //마우스무브이벤트
             $smallImg.on({
-                mousemove:function(event){ //screenX,Y /clientX,Y / 등등 마우스 움직에 따른 각 좌표값 확인가능
-                    //console.log('clientX: ', event.clientX); //selector(client)에 대한 X좌표를 확인해볼수있음 (그냥 event만 하면 일어난 이벤트에대한 모든걸 볼 수 있음)
-                    //console.log('clientY: ', event.clientY); //selector에 대한Y좌표를 확인해볼수있음
-
-                    bottom = event.clientY*.04+60;        //event.clientY의 원 수치는 매우 큼(400얼마 이런식)그래서 줄여서 사용하는게 편해서 *.03이런식으로해줌(30%)
-                    left = event.clientX*.04;              // *.02이게 커질수록 움직임이 큼
-                    $(this).css({bottom:bottom+'px',left:left+'px'}); //만약 백그라운드를 움직이는거면 px를 꼭 붙여야함(아니면 생략해도 무관하지만 그냥 붙이는습관 ㄱ)
+                mousemove:function(event){
+                    bottom = event.clientY*.04+60;
+                    left = event.clientX*.04;
+                    $(this).css({bottom:bottom+'px',left:left+'px'});
                 }
             });
 
-            // $section4.on({
-            //     mousemove:function(event){
-            //         x = event.clientX*.03;
-            //         y = event.clientY*.03;
-
-            //             console.log('offset().top', $smallImg.offset().top);
-            //             console.log('offset().left', $smallImg.offset().left);
-            //         $smallImg.css({bottom: y+60,left:x});
-            //         $largeImg.css({top: -y*1.2,left:-x*1.2});
-            //     }
-            // });
-            
-            //2.타겟의 좌표를 가져와서 거기에서 움직임을 준다.
             $section4.on({
                 mousemove:function(event){
-                    x = ($smallImg.offset().left-event.pageX)*.03; //smallImg가 pageX에서 떨어진만큼을 알고싶음
+                    x = ($smallImg.offset().left-event.pageX)*.03;
                     y = ($smallImg.offset().top-event.pageY)*.03;
 
-                        //console.log('offset().top', $smallImg.offset().top);
-                        //console.log('offset().left', $smallImg.offset().left);
                     $smallImg.css({bottom: y+60,left:x});
                     $largeImg.css({top: -y*1.2,left:-x*1.2});
                 }
             });
-
-            console.log('푸터의 탑 위치 offset().top', $('#footer').offset().top);
-            console.log('푸터높이', $('#footer').height());
-            console.log('창높이', $(window).height()); 
-            console.log('웹문서전체너비', $(document).width())
-            console.log('웹문서전체높이',$(document).height())
-
         },
-        section5Fn: function(){             //자세한 주석 03_15_project_themezza_litho_section4,5
+        section5Fn: function(){
             var $sec5      = $('#section5');
             var $slideWrap = $('#section5 .slide-wrap');
             var $slideView = $('#section5 .slide-view');
@@ -1130,23 +1058,6 @@
                 mainslideFn();
             }
 
-            //3.스와이프기능
-            // $slideView.swipe({
-            //     swipeLeft:function(event){
-            //         event.preventDefault();
-            //         if(!$slideWrap.is(':animated')){
-            //             pauseFn();
-            //             nextSlideCountFn();
-            //         }
-            //     },
-            //     swipeRight:function(event){
-            //         event.preventDefault();
-            //         if(!$slideWrap.is(':animated')){
-            //             pauseFn();
-            //             prevSlideCountFn();
-            //         }
-            //     }
-            // });
             var touchS = 0;
             var touchE = 0;
             var mouseDown = false;
@@ -1223,7 +1134,7 @@
             }
 
         },
-        section6Fn: function(){             //자세한 주석 03_16_project_themezza_litho_section6
+        section6Fn: function(){
             var $ul = $('#section6 .col-gap .number .col ul');
             var $column0 = $('#section6 .container > ul > li').eq(0);
             var $column1 = $('#section6 .container > ul > li').eq(1);
@@ -1245,17 +1156,6 @@
             var t = 0;
             var st1 =null;
             var st2 =null;
-                //console.log($column0.find('ul').eq(0));
-                // $column0.find('ul').eq(0).stop().animate({top:-65*2},500);
-                // $column0.find('ul').eq(1).stop().animate({top:-65*5},300);
-                // $column0.find('ul').eq(2).stop().animate({top:-65*3},100);
-                // $column0.find('ul').eq(3).stop().animate({top:-65*0},100);
-
-            //객체 요소 내에 data-?속성을 가져오기
-            // console.log($column0.find('.col').eq(0).data('number'));
-            // console.log($column0.find('.col').eq(1).data('number'));
-            // console.log($column0.find('.col').eq(2).data('number'));
-            // console.log($column0.find('.col').eq(3).data('number'));
 
             $column0.find('.col').each(function(idx){
                 num1[idx] = $(this).data('number');
@@ -1273,23 +1173,16 @@
                 num4[idx] = $(this).data('number');
             });
 
-            //페럴록스
             $(window).scroll(function(){
-                if($(window).scrollTop() >= $('#section5').offset().top-400){ //가장상단에서 section5까지의 탑값
+                if($(window).scrollTop() >= $('#section5').offset().top-400){ 
                     if(t==0){
-                        t=1; //변수 t를 1로 수정함으로써 다음에 조건 만족못하게 막음(1번만 실행하기위해서)
+                        t=1;
 
                         $('#section6 .container > ul').addClass('addCounter');
                         st1 = setTimeout(formatFn,100);
                         clearTimeout(st1);
                         st2 = setTimeout(countFn,500);
                         clearTimeout(st1);
-
-                        // setTimeout(function(){
-                        //     formatFn();
-                        //     setTimeout(countFn,500);
-                        // },100); 
-                        //setTimeout이 동시에 잇음 버그일어난다고 콜백함수로 넣엇는데,, 난 원래하듯이해도 잘 되는듯?
                     }
                 }
                 if($(window).scrollTop() === 0){
@@ -1365,7 +1258,7 @@
             };
 
         },
-        section7Fn: function(){             //자세한 주석 04_08_litho_porject
+        section7Fn: function(){
             var $bg = $('#section7 .bg');
             var $li = $('#section7 .container .content > ul > li');
 
@@ -1385,11 +1278,10 @@
                 });
             });
         },
-        section8Fn: function(){             //자세한 주석 04_09_litho_project_섹션8슬라이드배열 참고
+        section8Fn: function(){
             var $sec8      = $('#section8');
-            var sec8Top      = $('#section8').offset().top-400;
+            var sec7Top      = $('#section7').offset().top+300;
             var $slideView = $('#section8 .slide-view');
-            var $slideWrap = $('#section8 .slide-wrap');
             var $slide     = $('#section8 .slide');
             var $slideW    = $('#section8 .slide').innerWidth();
             var n          = $('#section8 .slide').length; //3
@@ -1411,28 +1303,27 @@
                     scr = 0;
                     $sec8.removeClass('addAni');
                 }
-                if($(this).scrollTop()>sec8Top){
+                if($(this).scrollTop()>sec7Top){
                     if(scr==0){
                         scr = 1;
                         scrollFn();
                     }
                 }
             });
+
             mainNextSlideFn();
             function mainNextSlideFn(){
-                //next 배열에 초기값 (next = [2,0,1];)설정 방법
-                //1. 슬라이드 전체 개수(3)만큼 반복문처리 설정
+
                 for(var i=0;i<n;i++){
                     next[i] = i;
                 }
-                //2. next=[0,1,2] 기억된 마지막 배열값을 삭제(pop)한다, 그리고 임시기억시킨다.
-                //3. next 배열 맨 처음 위치에 삽입한다.(unshift)
+
                 var imsi = next.pop();
                     next.unshift(imsi);   //next = [2,0,1];
 
                 for(var i=0;i<cnt;i++){
-                    var imsi =  next.shift(); //맨 앞 배열 값 삭제 후 임시 기억 변수에 저장
-                                next.push(imsi); //변수 임시에 저장된 값을 next배열의 가장뒤에 추가
+                    var imsi =  next.shift();
+                                next.push(imsi);
                 }
 
                 for(var i=0;i<n;i++){
@@ -1475,46 +1366,37 @@
             //터치이벤트핸들러
             $slideView.on({
                 mousedown:function(e){
-                    mouseDown = 1;          //마우스드래그 시작을 알려줌
+                    mouseDown = 1;
                     e.preventDefault();
                     mD = e.pageX;
                 },
-                touchstart:function(e){     //모바일에서는 마우스다운이라는 기능이없으니까!
+                touchstart:function(e){
                     mouseDown = 1;
                     e.preventDefault();
-                    mD = e.originalEvent.changedTouches[0].pageX; //제이쿼리에는 touch에 대한 지원이없어서 오리지널자바스크립트에서 가져와서 사용
+                    mD = e.originalEvent.changedTouches[0].pageX;
                     console.log(e.originalEvent.changedTouches)
                 },
                 mouseup:function(e){
-                    mouseDown = 0;          //토글클래스같은 효과가 나게 이때는 초기화해줘야함
+                    mouseDown = 0;
                     e.preventDefault();
                     mU = e.pageX;
                     touchEventFn();
                 },
-                touchend:function(e){        //모바일에서는 마우스업이라는 기능이없으니까!
+                touchend:function(e){
                     mouseDown = 0;
                     e.preventDefault();
                     mU = e.originalEvent.changedTouches[0].pageX;
                     touchEventFn();
                 },
-                mouseleave:function(e){     //mouseup이 안된상태에서만 수행=>mouseup이 영역을 벗어나서 일어나면 못읽으니까 이걸추가해줌
+                mouseleave:function(e){
                     e.preventDefault();
-                    if(mouseDown==1){       //mousedown일때 변수 마우스다운을 1로바꿔뒀으니 그때만 수행
+                    if(mouseDown==1){
                         mouseDown = 0; 
                         mU = e.pageX;
                         touchEventFn();
                         console.log(mU,mD);
                     }
                 }
-                // touchmove:function(e){      
-                //     e.preventDefault();
-                //     if(mouseDown==1){
-                //         mouseDown = 0; 
-                //         mU = e.originalEvent.changedTouches[0].pageX;
-                //         touchEventFn();
-                //         console.log(mU,mD);
-                //     }
-                // }
             });
 
             function touchEventFn(){
@@ -1585,10 +1467,10 @@
             }
 
             $(window).resize(function(){
-                setTimeout(resizeFn,100);
+                setTimeout(resizeFn,10);
             });
             
-            setTimeout(resizeFn,100);
+            setTimeout(resizeFn,10);
         },
         section10Fn: function(){
             var $sec10 = $('#section10');
@@ -1744,15 +1626,6 @@
             //위에 클릭 이벤트 대상이 아닌 이벤트를 찾기위해서
             $document.on({
                 click:function(e){
-                    console.log(e.target,e.currentTarget)
-                    //닫고자하는 모달창 닫기버튼을 클릭해도 닫고,
-                    //모든 클릭대상은 모달창을 닫게 해준다
-                    //그래서 버튼 이벤트의 타켓과 현재 클릭한 이벤트 타겟이 다르면
-                    //창을 닫는다
-                    //클릭하고자하는 버튼이 아닌 다른 것을 클릭하면
-                    //모달창이 닫힌다.
-                    //위에 클릭 이벤트 대상이 아닌 모든것이 해당됨
-                    //!== 같지않으면,, 즉 이벤트타겟들이 일어난게 지금현재의 $document.on({})의 타겟이 아닐때
                     if(e.target !== e.currentTarget){ 
                         $html.removeClass('addModal');
                         $header.removeClass('addHide');

@@ -175,7 +175,7 @@
 #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide1 {z-index:2;background-image:url(../img/home-interior-design-slider-img02.jpg);}
 #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide2 {z-index:1;background-image:url(../img/home-interior-design-slider-img03.jpg);}
 /* 섹션1 슬라이드_오른쪽하단 흰박스 */
-#wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box {position:absolute;bottom:0;right:0;width:600px;height:370px;background:#fff;}
+#wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box {position:absolute;bottom:0;right:0;width:600px;height:370px;background:#fff;}/* 600 370 */
 #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box .text-gap {padding:98px 112px;text-transform:uppercase;}
 #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box .text-gap .text-wrap {width:100%;}
 #wrap #main #section1 .wrap .gap .container .slide-container .slide-view .slide-wrap .slide .text-box .text-gap .text-wrap .title1 {padding-bottom:40px;}
@@ -395,11 +395,6 @@
 #wrap #main #section6 .wrap .gap .container > ul > li:nth-child(4) .col-gap .number .col1 > ul {top:calc(-65px*0);}
 #wrap #main #section6 .wrap .gap .container > ul > li:nth-child(4) .col-gap .number .col2 > ul {top:calc(-65px*6);}
 #wrap #main #section6 .wrap .gap .container > ul > li:nth-child(4) .col-gap .number .col3 > ul {top:calc(-65px*0);}
-
-
-/* #wrap #main #section6 .wrap .gap .container > ul > li .col-gap .title {}
-#wrap #main #section6 .wrap .gap .container > ul > li .col-gap .title h4 {} */
-
 
 /* 메인 섹션7 */
 #wrap #main #section7 {width:100%;background:#fff;}
