@@ -476,14 +476,14 @@
 #wrap #main #section9 .wrap {width:100%;max-width:1704.66px;margin:0 auto;}
 #wrap #main #section9 .wrap .gap {margin:0;}
 #wrap #main #section9 .wrap .gap .container {width:100%;}
-#wrap #main #section9 .wrap .gap .container .title {text-align:center;padding-bottom:5.2796452%;font-family:'Poppins', sans-serif;}
-#wrap #main #section9 .wrap .gap .container .title h3 {font-size:15px;font-weight:500;color:#c3964e;margin-bottom:1.1732545%;}
+#wrap #main #section9 .wrap .gap .container .title {text-align:center;padding-bottom:100px;font-family:'Poppins', sans-serif;}
+#wrap #main #section9 .wrap .gap .container .title h3 {font-size:15px;font-weight:500;color:#c3964e;margin-bottom:30px;}
 #wrap #main #section9 .wrap .gap .container .title h2 {font-size:32.2px;font-weight:700;color:#232323;letter-spacing:-1px;}
 
 #wrap #main #section9 .wrap .gap .container .content {width:100%;}
 #wrap #main #section9 .wrap .gap .container .content > ul {width:100%;}
-#wrap #main #section9 .wrap .gap .container .content > ul > li {float:left;width:33.33333%;opacity:0;transition:all 1s;}
-#wrap #main #section9 .wrap .gap .container .content > ul > li.addAni {opacity:1;transition:all 1s}
+#wrap #main #section9 .wrap .gap .container .content > ul > li {float:left;width:33.33333%;opacity:0;/* transition:all 1s; */}
+/* #wrap #main #section9 .wrap .gap .container .content > ul > li.addAni {opacity:1;} */
 #wrap #main #section9 .wrap .gap .container .content > ul > li .content-gap {margin:0 15px;}
 #wrap #main #section9 .wrap .gap .container .content > ul > li .content-gap .content-wrap {width:100%;border-radius:7px;overflow:hidden;box-shadow:4px -5px 20px rgba(0,0,0,.08);}
 #wrap #main #section9 .wrap .gap .container .content > ul > li .content-gap .content-wrap > ul {width:100%;height:359px;}/* 높이비율 1.334126129*/

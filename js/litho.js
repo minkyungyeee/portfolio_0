@@ -1431,11 +1431,11 @@
 
             function scrollFn(){
                 setTimeout(function(){
-                    $li.eq(0).addClass('addAni');
+                    $li.eq(0).stop().animate({opacity:1},1000);
                         setTimeout(function(){
-                            $li.eq(1).addClass('addAni');
+                            $li.eq(1).stop().animate({opacity:1},1000);
                                 setTimeout(function(){
-                                    $li.eq(2).addClass('addAni');
+                                    $li.eq(2).stop().animate({opacity:1},1000);
                                 },200);
                         },200);
                 },0);
@@ -1445,7 +1445,7 @@
             $(window).scroll(function(){
                 if($(this).scrollTop() <= 20){
                     scr = 0;
-                    $li.removeClass('addAni');
+                    $li.stop().animate({opacity:0},0);
                 }
                 if($(this).scrollTop() > $('#section9').offset().top-400){
                     if(scr == 0){
